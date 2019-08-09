@@ -8,25 +8,30 @@ import java.util.LinkedList;
 import com.hanjang.framework.GameObject;
 import com.hanjang.framework.ObjectID;
 
-public class Block extends GameObject{
+public class Flag extends GameObject{
 
-	public Block(float x, float y, ObjectID objectID) {
+	public ObjectID objectID;
+	
+	public Flag(float x, float y, ObjectID objectID) {
 		super(x, y, objectID);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void tick(LinkedList<GameObject> objectList) {
-		
+		return;
 	}
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(Game.tex.objects[0], (int)x, (int)y, null);
+		g.setColor(Color.GREEN);
+		g.fillRect((int)x, (int)y, 32, 32);
 	}
 
-	//나는 boolean을 하려고 했는데 intersect가 아니기 때문에 필요가 없다는 것을 깨달았다. 어떻게하면 현재 이 블락 오브젝트의 크기의 밸류를 모두 한번에 넘길수 있을까 생각해보았다.
+	@Override
 	public Rectangle getBounds() {
+		// TODO Auto-generated method stub
 		return new Rectangle((int)x, (int)y, 32, 32);
 	}
+
 }

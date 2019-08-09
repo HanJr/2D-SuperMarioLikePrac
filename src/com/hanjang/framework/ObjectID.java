@@ -2,5 +2,7 @@ package com.hanjang.framework;
 
 public enum ObjectID {
 	Player,
-	Block
+	Block,
+	Bullet,
+	Flag
 }

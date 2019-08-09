@@ -12,6 +12,7 @@ public abstract class GameObject {
 	protected boolean falling = true;
 	protected boolean jumping = false;
 	protected ObjectID objectID;//enum 클래스는 어떻게 사용 할 수 있을까?
+	protected int isFacing = 1; // 1 is right
 	
 	public GameObject(float x, float y, ObjectID objectID) {
 		this.x = x;
@@ -72,6 +73,15 @@ public abstract class GameObject {
 		this.jumping = jumping;
 	}
 
+	public void setIsFacing(int isFacing) {
+		this.isFacing = isFacing;
+	}
+
+	public int getIsFacing() {
+		return isFacing;
+	}
+	
+	
 	public ObjectID getObjectID() {
 		return objectID;
 	}

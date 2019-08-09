@@ -12,9 +12,11 @@ import com.hanjang.framework.ObjectID;
 public class Player extends GameObject{
 
 	private int width = 32;
-	private int height = 64;
+	private int height = 32;
 	private float gravity = 0.5f;//중력이 0.5로서 한번에 velY를 0으로 만들지 못하기 때문에, 어느정도 점프가 가능하다 
 	private float MAX_SPEED = 10;
+	private Animation animation = new Animation(1, Game.tex.objects[1], Game.tex.objects[2],Game.tex.objects[3]);
+	public static boolean LEVEL_COMPLETED = false;
 	
 	public Player(float x, float y, ObjectID objectID) {
 		super(x, y, objectID);
@@ -23,6 +25,9 @@ public class Player extends GameObject{
 
 	@Override
 	public void tick(LinkedList<GameObject> objectList) {
+
+		if(velX != 0)
+			animation.runAnimation();
 		x += velX; //super class의 field를 그냥 사용가능하다. private이 아니라, protected가 사용되어서 그런 것 같다. 
 		y += velY; //super class의 field를 그냥 사용가능하다. private이 아니라, protected가 사용되어서 그런 것 같다. 
 		
@@ -37,16 +42,10 @@ public class Player extends GameObject{
 	
 	@Override
 	public void render(Graphics g) {
-		g.setColor(Color.PINK);
-		g.fillRect((int)x, (int)y, width, height);
-		
-		Graphics2D g2d = (Graphics2D) g;
-		g.setColor(Color.WHITE);
-		
-		g2d.draw(getBounds());
-		g2d.draw(getBoundsTop());
-		g2d.draw(getBoundsRight());
-		g2d.draw(getBoundsLeft());
+		if(velX == 0)
+			g.drawImage(Game.tex.objects[1], (int) x, (int) y, null);
+		else
+			animation.drawImage(g, (int) x, (int) y); 
 	}
 
 	public void collision(LinkedList<GameObject> objectList) {
@@ -71,6 +70,29 @@ public class Player extends GameObject{
 				else {
 					falling = true;
 				}
+			}
+			else if(objectList.get(i).getObjectID() == ObjectID.Flag) {
+				boolean touching = false;
+				
+				if(getBounds().intersects(objectList.get(i).getBounds())){
+					touching = true;
+				}
+				else if(getBoundsTop().intersects(objectList.get(i).getBounds())){
+					touching = true;
+				}
+				else if(getBoundsRight().intersects(objectList.get(i).getBounds())){
+					touching = true;
+				}
+				else if(getBoundsLeft().intersects(objectList.get(i).getBounds())){
+					touching = true;
+				}
+				
+				if(touching) {
+					LEVEL_COMPLETED = true;
+					Game.handler.getObjectList().clear();
+				}
+				
+				touching = false;
 			}
 		}
 	}

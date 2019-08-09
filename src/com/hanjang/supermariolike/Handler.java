@@ -12,7 +12,7 @@ public class Handler {
 	private Camera cam;
 	
 	public Handler(Camera cam) {
-		this.cam = cam;
+		this.cam = cam;//why should we pass cam as an argument? it is not a GameObject. 
 	}
 	
 	public void tick() {
@@ -38,7 +38,7 @@ public class Handler {
 	public void removeObject(GameObject object) {
 		objectList.remove(object);
 	}
-	
+/*	
 	public void createLevel() {
 		for(int x = 0; x < Game.WIDTH + 32; x += 32) {
 			addObject(new Block(x, Game.HEIGHT - 32, ObjectID.Block));
@@ -52,7 +52,7 @@ public class Handler {
 			addObject(new Block(0, y, ObjectID.Block));
 		}
 	}
-	
+*/	
 	public LinkedList<GameObject> getObjectList() {
 		return objectList;
 	}
